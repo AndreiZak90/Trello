@@ -1,0 +1,180 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+li {
+  list-style-type: none;
+}
+
+body {
+  background: linear-gradient(45deg, blue, white);
+  position: relative;
+  min-height: 100vh;
+}
+
+.link_rek {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: #262626;
+  font-size: 11px;
+  a {
+    color: #262626;
+  }
+}
+
+.none {
+  display: none;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 5px 10px;
+}
+
+.main_box {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.item_box {
+  padding: 7px 8px;
+  background: #dfdfdf;
+  width: 33%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.item_main_title {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 4px;
+}
+
+.item_title {
+  font-size: 18px;
+  color: #f25c05;
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.dot {
+  width: 3px;
+  height: 3px;
+  background: grey;
+  border-radius: 50%;
+}
+
+.cards {
+  color: #262626;
+}
+
+.card {
+  position: relative;
+  width: 240px;
+  padding: 5px 2px;
+  font-size: 10px;
+  margin: 5px 0;
+  background: white;
+  border-radius: 4px;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  cursor: grabbing;
+}
+
+.card:hover .item_card_close {
+  display: block;
+}
+
+.card.dragged {
+  position: absolute;
+  z-index: 99;
+  width: 240px;
+  padding: 0 2px;
+  font-size: 10px;
+  margin: 5px 7px;
+  background: white;
+  border-radius: 4px;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.btn_box {
+  margin-left: 5px;
+}
+
+.item_card_close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: none;
+  width: 10px;
+  height: 10px;
+  cursor: pointer;
+}
+
+.add_card {
+  border: none;
+  background: inherit;
+  cursor: pointer;
+  color: #3b3b3b;
+}
+
+.add_card:hover {
+  color: brown;
+}
+
+.form_btn_text {
+  min-width: 200px;
+  font-size: 12px;
+}
+
+.form_btn_text::placeholder {
+  font-size: 7px;
+}
+
+.btn_block {
+  display: flex;
+  align-items: center;
+}
+
+.form_btn_button {
+  font-size: 10px;
+  border: none;
+  color: white;
+  background: #0e4228;
+  padding: 3px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form_btn_close {
+  font-size: 15px;
+  border: none;
+  background: inherit;
+  margin-left: 9px;
+  cursor: pointer;
+}
+
+.cloce_btn {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
