@@ -147,6 +147,7 @@ body {
 }
 
 .form_btn_text::placeholder {
+  padding-left: 4px;
   font-size: 7px;
 }
 

@@ -5,10 +5,11 @@ export default class Card {
     this.btn = document.body.querySelectorAll(".add_card");
     this.btnBox = document.body.querySelectorAll(".btn_box");
     this.btnClose = document.body.querySelectorAll(".form_btn_close");
-    this.addCard = document.querySelectorAll(".form_btn_button");
-    this.itemBox = document.querySelectorAll(".item_box");
-    this.cards = document.querySelectorAll(".card");
-    this.close = document.querySelectorAll(".item_card_close");
+    this.addCard = document.body.querySelectorAll(".form_btn_button");
+    this.itemBox = document.body.querySelectorAll(".item_box");
+    this.cards = document.body.querySelectorAll(".card");
+    this.allCards = document.body.querySelectorAll(".cards");
+    this.close = document.body.querySelectorAll(".item_card_close");
     this.actualElement = undefined;
   }
   start() {
@@ -17,6 +18,7 @@ export default class Card {
     this.newCard();
     this.removeElem();
     this.transfer();
+    this.save();
   }
   addValue() {
     this.btn.forEach((e) => {
@@ -49,11 +51,18 @@ export default class Card {
         const parent = e.closest(".item_box");
         const elem = parent.querySelector(".cards");
         const current = parent.querySelector(".form_btn_text");
-
-        this.addText(elem, current.value);
-        current.value = "";
         const element = parent.querySelector(".add_card");
         const elemNan = parent.querySelector(".form_btn");
+
+        if (current.value === "") {
+          element.classList.toggle("none");
+          elemNan.classList.toggle("none");
+          return;
+        }
+
+        this.addText(elem, current.value);
+
+        current.value = "";
         element.classList.toggle("none");
         elemNan.classList.toggle("none");
       });
@@ -72,7 +81,6 @@ export default class Card {
     img.classList.add("item_card_close");
     li.append(img);
     elem.append(li);
-    console.log(images);
   }
 
   removeElem() {
@@ -88,7 +96,6 @@ export default class Card {
   transfer() {
     let actualElement;
     this.mouseDown = (el) => {
-      el.preventDefault();
       if (el.target.classList.contains("card")) {
         actualElement = el.target.closest(".card");
 
@@ -105,7 +112,6 @@ export default class Card {
     };
 
     this.mouseUp = (el) => {
-      el.preventDefault();
       el.stopPropagation();
       if (!actualElement) return;
 
@@ -131,15 +137,16 @@ export default class Card {
     };
 
     this.mouseMove = (el) => {
+      el.preventDefault();
       el.stopPropagation();
       if (!actualElement) return;
-
       actualElement.style.top = el.pageY - this.shiftY + "px";
       actualElement.style.left = el.pageX - this.shiftX + "px";
     };
-
     document.addEventListener("mousedown", this.mouseDown);
     document.addEventListener("mouseup", this.mouseUp);
     document.addEventListener("mousemove", this.mouseMove);
   }
+
+  save() {}
 }
