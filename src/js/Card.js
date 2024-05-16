@@ -1,27 +1,17 @@
 import images from "../img/x.png";
 
 export default class Card {
-  constructor() {
-    this.btn = document.body.querySelectorAll(".add_card");
-    this.btnBox = document.body.querySelectorAll(".btn_box");
-    this.btnClose = document.body.querySelectorAll(".form_btn_close");
-    this.addCard = document.body.querySelectorAll(".form_btn_button");
-    this.itemBox = document.body.querySelectorAll(".item_box");
-    this.cards = document.body.querySelectorAll(".card");
-    this.allCards = document.body.querySelectorAll(".cards");
-    this.close = document.body.querySelectorAll(".item_card_close");
-    this.actualElement = undefined;
-  }
   start() {
-    this.addValue();
-    this.closeValue();
+    this.addCards();
+    this.closeCard();
     this.newCard();
-    this.removeElem();
+    this.removeCard();
     this.transfer();
     this.save();
   }
-  addValue() {
-    this.btn.forEach((e) => {
+  addCards() {
+    const btn = document.body.querySelectorAll(".add_card");
+    btn.forEach((e) => {
       e.addEventListener("click", (el) => {
         el.preventDefault();
         const parent = e.closest(".item_box");
@@ -32,8 +22,9 @@ export default class Card {
       });
     });
   }
-  closeValue() {
-    this.btnClose.forEach((e) => {
+  closeCard() {
+    const btnClose = document.body.querySelectorAll(".form_btn_close");
+    btnClose.forEach((e) => {
       e.addEventListener("click", (el) => {
         el.preventDefault();
         const parent = e.closest(".item_box");
@@ -45,7 +36,8 @@ export default class Card {
     });
   }
   newCard() {
-    this.addCard.forEach((e) => {
+    const addCard = document.body.querySelectorAll(".form_btn_button");
+    addCard.forEach((e) => {
       e.addEventListener("click", (el) => {
         el.preventDefault();
         const parent = e.closest(".item_box");
@@ -81,14 +73,20 @@ export default class Card {
     img.classList.add("item_card_close");
     li.append(img);
     elem.append(li);
+
+    li.querySelector(".item_card_close").addEventListener("click", (e) => {
+      e.preventDefault();
+      li.remove();
+    });
   }
 
-  removeElem() {
-    this.close.forEach((e) => {
-      e.addEventListener("click", (el) => {
-        el.preventDefault();
-        const parentElem = e.closest(".card");
-        parentElem.remove();
+  removeCard() {
+    const removeBtn = document.querySelectorAll(".item_card_close");
+    removeBtn.forEach((el) => {
+      el.addEventListener("click", (e) => {
+        const parent = e.closest(".card");
+        console.log(parent);
+        parent.remove();
       });
     });
   }
@@ -148,5 +146,60 @@ export default class Card {
     document.addEventListener("mousemove", this.mouseMove);
   }
 
-  save() {}
+  save() {
+    window.addEventListener("beforeunload", () => {
+      const formData = [
+        {
+          title: "todo",
+          cards: [],
+        },
+        {
+          title: "progress",
+          cards: [],
+        },
+        {
+          title: "done",
+          cards: [],
+        },
+      ];
+
+      const boxTODO = document.querySelector(".todo");
+      const todoItem = boxTODO.querySelector(".cards");
+      formData[0].cards = todoItem.innerHTML;
+      const boxProgress = document.querySelector(".progress");
+      const ProgressItem = boxProgress.querySelector(".cards");
+      formData[1].cards = ProgressItem.innerHTML;
+      const boxDone = document.querySelector(".done");
+      const doneItem = boxDone.querySelector(".cards");
+      formData[2].cards = doneItem.innerHTML;
+
+      localStorage.setItem("formData", JSON.stringify(formData));
+      //localStorage.clear();
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const json = localStorage.getItem("formData");
+
+      let formData;
+
+      try {
+        formData = JSON.parse(json);
+      } catch (error) {
+        console.log(error);
+      }
+
+      if (formData) {
+        const boxTODO = document.querySelector(".todo");
+        const todoItem = boxTODO.querySelector(".cards");
+        const boxProgress = document.querySelector(".progress");
+        const ProgressItem = boxProgress.querySelector(".cards");
+        const boxDone = document.querySelector(".done");
+        const doneItem = boxDone.querySelector(".cards");
+
+        todoItem.innerHTML = formData[0].cards;
+        ProgressItem.innerHTML = formData[1].cards;
+        doneItem.innerHTML = formData[2].cards;
+      }
+    });
+  }
 }
