@@ -5,9 +5,11 @@ export default class Card {
     this.addCards();
     this.closeCard();
     this.newCard();
-    this.removeCard();
+
     this.transfer();
     this.save();
+
+    this.removeCard();
   }
   addCards() {
     const btn = document.body.querySelectorAll(".add_card");
@@ -74,18 +76,18 @@ export default class Card {
     li.append(img);
     elem.append(li);
 
-    li.querySelector(".item_card_close").addEventListener("click", (e) => {
-      e.preventDefault();
+    img.addEventListener("click", () => {
       li.remove();
     });
   }
 
   removeCard() {
-    const removeBtn = document.querySelectorAll(".item_card_close");
+    const removeBtn = document.body.querySelectorAll(".item_card_close");
+
     removeBtn.forEach((el) => {
       el.addEventListener("click", (e) => {
-        const parent = e.closest(".card");
-        console.log(parent);
+        e.preventDefault();
+        const parent = el.closest(".card");
         parent.remove();
       });
     });
@@ -174,7 +176,7 @@ export default class Card {
       formData[2].cards = doneItem.innerHTML;
 
       localStorage.setItem("formData", JSON.stringify(formData));
-      //localStorage.clear();
+      // localStorage.clear();
     });
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -199,6 +201,7 @@ export default class Card {
         todoItem.innerHTML = formData[0].cards;
         ProgressItem.innerHTML = formData[1].cards;
         doneItem.innerHTML = formData[2].cards;
+        this.removeCard();
       }
     });
   }
